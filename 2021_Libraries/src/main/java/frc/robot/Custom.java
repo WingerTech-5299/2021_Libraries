@@ -1,7 +1,6 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-
 import edu.wpi.first.wpilibj.TimedRobot;
 
 public final class Custom extends TimedRobot{
@@ -15,11 +14,11 @@ public final class Custom extends TimedRobot{
     }
 
 
-    public Double driftFixTalonSRX(TalonSRX leftMotorController, TalonSRX rightMotorController){
+    public Double driftFixTwoEncoderTalonSRX(TalonSRX Left_motor_controller, TalonSRX Right_motor_controller){
 
          Double driftFix;
 
-         Double skewAmount = Math.abs(leftMotorController.getSelectedSensorPosition()) - Math.abs(rightMotorController.getSelectedSensorPosition());
+         Double skewAmount = Math.abs(Left_motor_controller.getSelectedSensorPosition()) - Math.abs(Right_motor_controller.getSelectedSensorPosition());
 
          if (Math.abs(skewAmount) > 1000){
              if (skewAmount > 0){
@@ -32,5 +31,27 @@ public final class Custom extends TimedRobot{
          }
 
         return driftFix;
+    }
+
+    public Double driftFixFourEncoderTalonSRX(TalonSRX Front_left_motor_controller, TalonSRX Front_right_motor_controller, TalonSRX Back_left_motor_controller, TalonSRX Back_right_motor_controller){
+
+        Double rightAverage = (Front_right_motor_controller.getSelectedSensorPosition() + Back_right_motor_controller.getSelectedSensorPosition()) / 2;
+        Double leftAverage = (Front_left_motor_controller.getSelectedSensorPosition() + Back_left_motor_controller.getSelectedSensorPosition()) / 2;
+
+        Double skewAmount = Math.abs(leftAverage) - Math.abs(rightAverage);
+        Double driftFix;
+
+        if (Math.abs(skewAmount) > 1000){
+            if (skewAmount > 0){
+                driftFix = -0.3;
+            } else {
+                driftFix = 0.3;
+            }
+        } else {
+            driftFix = 0.0;
+        }
+
+        return driftFix;
+
     }
 }
