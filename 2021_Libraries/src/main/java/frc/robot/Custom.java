@@ -1,6 +1,8 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 
@@ -29,51 +31,51 @@ public final class Custom extends TimedRobot{
     }
 
     public Double getTargetDistance (Double Hight_of_Target, Double Hight_of_camera, double ty){
-        Double absTargetHight = Hight_of_Target - Hight_of_camera;
+        final Double absTargetHight = Hight_of_Target - Hight_of_camera;
 
-        Double targetDistance = absTargetHight / Math.abs(ty);
+        final Double targetDistance = absTargetHight / Math.abs(ty);
 
         return targetDistance;
     }
 
 
-    public Double driftFixTwoEncoderTalonSRX(TalonSRX Left_motor_controller, TalonSRX Right_motor_controller){
+    public Double driftFixTwoEncoderTalonSRX(WPI_TalonSRX Left_motor_controller, WPI_TalonSRX Right_motor_controller){
 
-         Double driftFix;
-         Double skewAmount = Math.abs(Left_motor_controller.getSelectedSensorPosition()) - Math.abs(Right_motor_controller.getSelectedSensorPosition());
+         final Double driftFix2;
+         final Double skewAmount = Math.abs(Left_motor_controller.getSelectedSensorPosition()) - Math.abs(Right_motor_controller.getSelectedSensorPosition());
 
          if (Math.abs(skewAmount) > 1000){
              if (skewAmount > 0){
-                 driftFix = -0.3;
+                 driftFix2 = -0.3;
              }else{
-                 driftFix = 0.3;
+                 driftFix2 = 0.3;
              }
          } else {
-             driftFix = 0.0;
+             driftFix2 = 0.0;
          }
 
-        return driftFix;
+        return driftFix2;
     }
 
     public Double driftFixFourEncoderTalonSRX(TalonSRX Front_left_motor_controller, TalonSRX Front_right_motor_controller, TalonSRX Back_left_motor_controller, TalonSRX Back_right_motor_controller){
 
-        Double rightAverage = (Front_right_motor_controller.getSelectedSensorPosition() + Back_right_motor_controller.getSelectedSensorPosition()) / 2;
-        Double leftAverage = (Front_left_motor_controller.getSelectedSensorPosition() + Back_left_motor_controller.getSelectedSensorPosition()) / 2;
+        final Double rightAverage = (Front_right_motor_controller.getSelectedSensorPosition() + Back_right_motor_controller.getSelectedSensorPosition()) / 2;
+        final Double leftAverage = (Front_left_motor_controller.getSelectedSensorPosition() + Back_left_motor_controller.getSelectedSensorPosition()) / 2;
 
-        Double skewAmount = Math.abs(leftAverage) - Math.abs(rightAverage);
-        Double driftFix;
+        final Double skewAmount = Math.abs(leftAverage) - Math.abs(rightAverage);
+        final Double driftFix4;
 
         if (Math.abs(skewAmount) > 1000){
             if (skewAmount > 0){
-                driftFix = -0.3;
+                driftFix4 = -0.3;
             } else {
-                driftFix = 0.3;
+                driftFix4 = 0.3;
             }
         } else {
-            driftFix = 0.0;
+            driftFix4 = 0.0;
         }
 
-        return driftFix;
+        return driftFix4;
 
     }
 }
