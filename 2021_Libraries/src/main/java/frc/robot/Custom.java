@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.interfaces.Gyro;
 
 public final class Custom extends TimedRobot{
 
-    public Double absGyroAngle (Gyro gyro){
+    public Double getAbsGyroAngle (Gyro gyro){
 
         final Double gyroAngle = gyro.getAngle();
         final Double numberOfRotaitions;
