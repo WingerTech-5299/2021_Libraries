@@ -47,7 +47,7 @@ repositories {
     maven {  url "https://jitpack.io" }
 }
 dependencies {
-    implementation 'com.github.WingerTech-5299:2021_Libraries'
+    implementation 'com.github.WingerTech-5299:2021_Libraries:main-SNAPSHOT'
     implementation wpi.deps.wpilib()
     nativeZip wpi.deps.wpilibJni(wpi.platforms.roborio)
     nativeDesktopZip wpi.deps.wpilibJni(wpi.platforms.desktop)
